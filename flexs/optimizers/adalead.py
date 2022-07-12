@@ -9,7 +9,7 @@ import flexs
 from flexs.utils import sequence_utils as s_utils
 
 
-class Adalead(flexs.Explorer):
+class Adalead(flexs.explorer.Explorer):
     """
     Adalead explorer.
 
@@ -23,19 +23,19 @@ class Adalead(flexs.Explorer):
     """
 
     def __init__(
-        self,
-        model: flexs.Model,
-        rounds: int,
-        sequences_batch_size: int,
-        model_queries_per_batch: int,
-        starting_sequence: str,
-        alphabet: str,
-        mu: int = 1,
-        recomb_rate: float = 0,
-        threshold: float = 0.05,
-        rho: int = 0,
-        eval_batch_size: int = 20,
-        log_file: Optional[str] = None,
+            self,
+            model: flexs.Model,
+            rounds: int,
+            sequences_batch_size: int,
+            model_queries_per_batch: int,
+            starting_sequence: str,
+            alphabet: str,
+            mu: int = 1,
+            recomb_rate: float = 0,
+            threshold: float = 0.05,
+            rho: int = 0,
+            eval_batch_size: int = 20,
+            log_file: Optional[str] = None,
     ):
         """
         Args:
@@ -94,7 +94,7 @@ class Adalead(flexs.Explorer):
         return ret
 
     def propose_sequences(
-        self, measured_sequences: pd.DataFrame
+            self, measured_sequences: pd.DataFrame
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Propose top `sequences_batch_size` sequences for evaluation."""
         measured_sequence_set = set(measured_sequences["sequence"])
@@ -102,7 +102,7 @@ class Adalead(flexs.Explorer):
         # Get all sequences within `self.threshold` percentile of the top_fitness
         top_fitness = measured_sequences["true_score"].max()
         top_inds = measured_sequences["true_score"] >= top_fitness * (
-            1 - np.sign(top_fitness) * self.threshold
+                1 - np.sign(top_fitness) * self.threshold
         )
 
         parents = np.resize(
@@ -119,15 +119,15 @@ class Adalead(flexs.Explorer):
 
             for i in range(0, len(parents), self.eval_batch_size):
                 # Here we do rollouts from each parent (root of rollout tree)
-                roots = parents[i : i + self.eval_batch_size]
+                roots = parents[i: i + self.eval_batch_size]
                 root_fitnesses = self.model.get_fitness(roots)
 
                 nodes = list(enumerate(roots))
 
                 while (
-                    len(nodes) > 0
-                    and self.model.cost - previous_model_cost + self.eval_batch_size
-                    < self.model_queries_per_batch
+                        len(nodes) > 0
+                        and self.model.cost - previous_model_cost + self.eval_batch_size
+                        < self.model_queries_per_batch
                 ):
                     child_idxs = []
                     children = []
@@ -143,8 +143,8 @@ class Adalead(flexs.Explorer):
                         # Stop when we generate new child that has never been seen
                         # before
                         if (
-                            child not in measured_sequence_set
-                            and child not in sequences
+                                child not in measured_sequence_set
+                                and child not in sequences
                         ):
                             child_idxs.append(idx)
                             children.append(child)
@@ -170,6 +170,6 @@ class Adalead(flexs.Explorer):
         # We propose the top `self.sequences_batch_size` new sequences we have generated
         new_seqs = np.array(list(sequences.keys()))
         preds = np.array(list(sequences.values()))
-        sorted_order = np.argsort(preds)[: -self.sequences_batch_size : -1]
+        sorted_order = np.argsort(preds)[: -self.sequences_batch_size: -1]
 
         return new_seqs[sorted_order], preds[sorted_order]

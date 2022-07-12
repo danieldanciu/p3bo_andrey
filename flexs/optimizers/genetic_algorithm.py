@@ -9,7 +9,7 @@ import flexs
 from flexs.utils import sequence_utils as s_utils
 
 
-class GeneticAlgorithm(flexs.Explorer):
+class GeneticAlgorithm(flexs.explorer.Explorer):
     """A genetic algorithm explorer with single point mutations and recombination.
 
     Based on the `parent_selection_strategy`, this class implements one of three
@@ -26,20 +26,20 @@ class GeneticAlgorithm(flexs.Explorer):
     """
 
     def __init__(
-        self,
-        model: flexs.Model,
-        rounds: int,
-        starting_sequence: str,
-        sequences_batch_size: int,
-        model_queries_per_batch: int,
-        alphabet: str,
-        population_size: int,
-        parent_selection_strategy: str,
-        children_proportion: float,
-        log_file: Optional[str] = None,
-        parent_selection_proportion: Optional[float] = None,
-        beta: Optional[float] = None,
-        seed: Optional[int] = None,
+            self,
+            model: flexs.Model,
+            rounds: int,
+            starting_sequence: str,
+            sequences_batch_size: int,
+            model_queries_per_batch: int,
+            alphabet: str,
+            population_size: int,
+            parent_selection_strategy: str,
+            children_proportion: float,
+            log_file: Optional[str] = None,
+            parent_selection_proportion: Optional[float] = None,
+            beta: Optional[float] = None,
+            seed: Optional[int] = None,
     ):
         """Create genetic algorithm."""
         name = (
@@ -67,8 +67,8 @@ class GeneticAlgorithm(flexs.Explorer):
                 f"{valid_parent_selection_strategies}"
             )
         if (
-            parent_selection_strategy == "top-proportion"
-            and parent_selection_proportion is None
+                parent_selection_strategy == "top-proportion"
+                and parent_selection_proportion is None
         ):
             raise ValueError(
                 "if top-proportion, parent_selection_proportion cannot be None"
@@ -95,11 +95,11 @@ class GeneticAlgorithm(flexs.Explorer):
         return torch.multinomial(probs, num_parents, replacement=True).numpy()
 
     def propose_sequences(
-        self, measured_sequences: pd.DataFrame
+            self, measured_sequences: pd.DataFrame
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Propose top `sequences_batch_size` sequences for evaluation."""
         # Set the torch seed by generating a random integer from the pre-seeded self.rng
-        torch.manual_seed(self.rng.integers(-(2**31), 2**31))
+        torch.manual_seed(self.rng.integers(-(2 ** 31), 2 ** 31))
 
         measured_sequence_set = set(measured_sequences["sequence"])
 
@@ -114,8 +114,8 @@ class GeneticAlgorithm(flexs.Explorer):
         sequences = {}
         initial_cost = self.model.cost
         while (
-            self.model.cost - initial_cost + self.population_size
-            < self.model_queries_per_batch
+                self.model.cost - initial_cost + self.population_size
+                < self.model_queries_per_batch
         ):
             # Create "children" by recombining parents selected from population
             # according to self.parent_selection_strategy and
@@ -148,6 +148,6 @@ class GeneticAlgorithm(flexs.Explorer):
         # new sequences we have generated
         new_seqs = np.array(list(sequences.keys()))
         preds = np.array(list(sequences.values()))
-        sorted_order = np.argsort(preds)[: -self.sequences_batch_size : -1]
+        sorted_order = np.argsort(preds)[: -self.sequences_batch_size: -1]
 
         return new_seqs[sorted_order], preds[sorted_order]

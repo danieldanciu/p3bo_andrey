@@ -5,7 +5,7 @@ import os
 import time
 import warnings
 from datetime import datetime
-from typing import Dict, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -73,7 +73,7 @@ class Explorer(abc.ABC):
             self, measured_sequences_data: pd.DataFrame
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Propose a list of sequences to be measured in the next round.
+        Propose a list of sequences to be measured in the next round (this is the equivalent of A.propose() in P3BO.
 
         This method will be overriden to contain the explorer logic for each explorer.
 
@@ -88,6 +88,21 @@ class Explorer(abc.ABC):
 
         """
         pass
+
+    def fit(self, sequences: List[str], fitness_values: List[float]):
+        """
+        Fit the model using the newly added measurements (this is the equivalent of A.fit() in P3BO.
+
+        This method will be overridden to contain the explorer logic for each explorer. Some explorers
+        (e.g. random, greedy) can't make use of this information, so they simply ignore it by not overriding this
+        method.
+
+        Args:
+            sequences: the list of measured sequences
+            fitness_values: the fitness value for each sequence in sequences
+
+        """
+        self.model.train(sequences, labels=fitness_values)
 
     def _log(
             self,
@@ -116,7 +131,7 @@ class Explorer(abc.ABC):
             self, landscape: flexs.Landscape, verbose: bool = True
     ) -> Tuple[pd.DataFrame, Dict]:
         """
-        Run the exporer.
+        Run the explorer.
 
         Args:
             landscape: Ground truth fitness landscape.

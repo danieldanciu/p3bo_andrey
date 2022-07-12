@@ -9,7 +9,7 @@ import flexs
 from flexs.utils import sequence_utils as s_utils
 
 
-class Random(flexs.Explorer):
+class Random(flexs.explorer.Explorer):
     """A simple random explorer.
 
     Chooses a random previously measured sequence and mutates it.
