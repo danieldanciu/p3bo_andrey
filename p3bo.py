@@ -23,7 +23,14 @@ class P3bo:
         self.explorers = explorers
 
     def optimize(self):
-        """ This is the function that you need to implement (including adding the necessary parameters)"""
+        """
+        This is the function that you need to implement (including adding the necessary parameters)
+
+        The P3BO population will consist of the three algorithms: adalead, random and genetic (they are in the
+        optimizers directory). Each of these algorithms exposes a propose_sequences() method and a fit() method.
+
+        You don't need to implement the adaptive variant of P3BO.
+        """
         pass
 
 

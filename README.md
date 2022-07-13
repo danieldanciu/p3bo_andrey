@@ -2,7 +2,8 @@
 Welcome to Cradle, Ena!
 
 Your mission, should you choose to accept it, is to ... (drum rolls) implement the P3BO algorithm! The algorithm
-is described on page 4 of the [P3BO paper](https://arxiv.org/pdf/2006.03227.pdf)
+is described on page 4 of the [P3BO paper](https://arxiv.org/pdf/2006.03227.pdf). You don't need 
+to implement the adaptive version.
 
 Most of the code that you write will go into [p3bo.py](p3bo.py). In order to help test your implementation we  
 provide 3 optimizers to run black box optimization on:
