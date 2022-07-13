@@ -2,11 +2,11 @@
 import editdistance
 import numpy as np
 
-import flexs
-from flexs.model import SEQUENCES_TYPE
+import flexs.model
+from flexs.types import SEQUENCES_TYPE
 
 
-class NoisyAbstractModel(flexs.Model):
+class NoisyAbstractModel(flexs.model.Model):
     r"""
     Behaves like a ground truth model.
 
@@ -21,7 +21,7 @@ class NoisyAbstractModel(flexs.Model):
 
     def __init__(
             self,
-            landscape: flexs.Landscape,
+            landscape: flexs.landscape.Landscape,
             signal_strength: float = 0.9,
     ):
         """

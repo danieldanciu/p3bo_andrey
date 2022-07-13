@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 import flexs
-from flexs.model import SEQUENCES_TYPE
+from flexs.types import SEQUENCES_TYPE
 from flexs.utils import sequence_utils as s_utils
 
 

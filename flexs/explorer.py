@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import tqdm
 
-import flexs
+import flexs.model
 
 
 class Explorer(abc.ABC):
@@ -24,7 +24,7 @@ class Explorer(abc.ABC):
 
     def __init__(
             self,
-            model: flexs.Model,
+            model: flexs.model.Model,
             name: str,
             rounds: int,
             sequences_batch_size: int,
@@ -128,7 +128,7 @@ class Explorer(abc.ABC):
             )
 
     def run(
-            self, landscape: flexs.Landscape, verbose: bool = True
+            self, landscape: flexs.landscape.Landscape, verbose: bool = True
     ) -> Tuple[pd.DataFrame, Dict]:
         """
         Run the explorer.

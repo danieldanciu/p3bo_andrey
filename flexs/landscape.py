@@ -3,7 +3,7 @@ import abc
 
 import numpy as np
 
-from flexs.model import SEQUENCES_TYPE
+from flexs.types import SEQUENCES_TYPE
 
 
 class Landscape(abc.ABC):

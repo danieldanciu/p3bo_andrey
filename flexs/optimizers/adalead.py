@@ -24,7 +24,7 @@ class Adalead(flexs.explorer.Explorer):
 
     def __init__(
             self,
-            model: flexs.Model,
+            model: flexs.model.Model,
             rounds: int,
             sequences_batch_size: int,
             model_queries_per_batch: int,

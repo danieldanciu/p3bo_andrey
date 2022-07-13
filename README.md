@@ -1,3 +1,4 @@
+# The problem
 Welcome to Cradle, Ena!
 
 Your mission, should you choose to accept it, is to ... (drum rolls) implement the P3BO algorithm! The algorithm
@@ -39,3 +40,20 @@ All this code has never been tested together and has probably bugs/glitches, par
 (we don't expect the algorithm implementations thmeselves to have any bugs).
 
 Have fun!
+
+# Installation instructions
+1. Clone the git repository:
+```bash
+git clone https://github.com/danieldanciu/p3bo.git
+```
+2. Create a conda environment:
+```bash
+conda create --name p3bo python=3.8
+conda activate p3bo
+```
+
+3. Install dependencies
+```bash
+cd p3bo
+
+```

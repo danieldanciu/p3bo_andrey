@@ -8,12 +8,6 @@ from flexs.optimizers.random import Random
 from flexs.optimizers.adalead import Adalead
 from flexs.optimizers.genetic_algorithm import GeneticAlgorithm
 
-
-class P3bo:
-    def __init__(self, explorers: List[flexs.explorer.Explorer]):
-        self.explorers = explorers
-
-
 protein_alphabet = 'ACDEFGHIKLMNPQRSTVWY'
 
 optimal_sequence = 'MKYTKVMRYQIIKPLNAEWDELGMVLRDIQKETRAALNKTIQLCWEYQGFSADYKQIHGQYPKPKDVLGYTSMHGYAYDRLKNEFSKIASSNLSQTIKRAVDKWNSDLKEILRGDRSIPNFRKDCPIDIVKQSTKIQKCNDGYVLSLGLINREYKNELGRKNGVFDVLIKANDKTQQTILERIINGDYTYTASQIINHKNKWFINLTYQFETKETALDPNNVMGVDLGIVYPVYIAFNNSLHRYHIKGGEIERFRRQVEKRKRELLNQGKYCGDGRKGHGYATRTKSIESISDKIARFRDTCNHKYSRFIVDMALKHNCGIIQMEDLTGISKESTFLKNWTYYDLQQKIEYKAREAGIQVIKIEPQYTSQRCSKCGYIDKENRQEQATFKCIECGFKTNADYNAARNIAIPNIDKIIRKTLKMQ'
@@ -22,6 +16,15 @@ optimal_sequence = 'MKYTKVMRYQIIKPLNAEWDELGMVLRDIQKETRAALNKTIQLCWEYQGFSADYKQIHGQ
 def get_starting_sequence(base_sequence: str, identity_percent: float) -> str:
     """ This function returns a sequence that is identity_percent identical to the given base sequence """
     pass
+
+
+class P3bo:
+    def __init__(self, explorers: List[flexs.explorer.Explorer]):
+        self.explorers = explorers
+
+    def optimize(self):
+        """ This is the function that you need to implement (including adding the necessary parameters)"""
+        pass
 
 
 def main():
@@ -33,7 +36,8 @@ def main():
                       starting_sequence=starting_sequence, alphabet=protein_alphabet)
     ga = GeneticAlgorithm(model=model, rounds=10, sequences_batch_size=10, model_queries_per_batch=100,
                           starting_sequence=starting_sequence, alphabet=protein_alphabet, population_size=100,
-                          parent_selection_strategy='top-k', children_proportion=0.5)
+                          parent_selection_strategy='top-proportion', children_proportion=0.5,
+                          parent_selection_proportion=0.5)
     random = Random(model=model, rounds=10, sequences_batch_size=10, model_queries_per_batch=100,
                     starting_sequence=starting_sequence, alphabet=protein_alphabet)
 

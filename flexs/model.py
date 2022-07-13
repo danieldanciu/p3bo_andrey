@@ -4,14 +4,12 @@ from typing import Any, List, Union
 
 import numpy as np
 
-import flexs
+import flexs.landscape
+from flexs.types import SEQUENCES_TYPE
 
-SEQUENCES_TYPE = Union[List[str], np.ndarray]
-
-
-class Model(flexs.Landscape, abc.ABC):
+class Model(flexs.landscape.Landscape, abc.ABC):
     """
-    Base model class. Inherits from `flexs.Landscape` and adds an additional
+    Base model class. Inherits from `flexs.landscape.Landscape` and adds an additional
     `train` method.
 
     """
@@ -30,15 +28,15 @@ class Model(flexs.Landscape, abc.ABC):
 
 class LandscapeAsModel(Model):
     """
-    This simple class wraps a `flexs.Landscape` in a `flexs.Model` to allow running
+    This simple class wraps a `flexs.landscape.Landscape` in a `flexs.Model` to allow running
     experiments against a perfect model.
 
     This class's `_fitness_function` simply calls the landscape's `_fitness_function`.
     """
 
-    def __init__(self, landscape: flexs.Landscape):
+    def __init__(self, landscape: flexs.landscape.Landscape):
         """
-        Create a `flexs.Model` out of a `flexs.Landscape`.
+        Create a `flexs.Model` out of a `flexs.landscape.Landscape`.
 
         Args:
             landscape: Landscape to wrap in a model.
