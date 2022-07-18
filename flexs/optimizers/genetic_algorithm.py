@@ -114,7 +114,7 @@ class GeneticAlgorithm(flexs.explorer.Explorer):
         sequences = {}
         initial_cost = self.model.cost
         while (
-                self.model.cost - initial_cost + self.population_size
+                self.model.cost - initial_cost #+ self.population_size BUGFIX
                 < self.model_queries_per_batch
         ):
             # Create "children" by recombining parents selected from population
